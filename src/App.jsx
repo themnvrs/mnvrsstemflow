@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const DROPBOX_TOKEN = "sl.u.AGaXbfnG312wcWcGvpdXWfW2CLPM6Gu4gYiWlrmsZ7cHlEUyKNR0h_Q598-noEiZKV3Oxgz-CCGSnBZvFyGal2UfUU0C5WuRDIKCbR6j-DyRRYrYPxder15v6hjo3AJ6QqlWwEXd6O66xjcRZ566VTSCA_Um2odKrm07VhK2kW58GJfUgKmstDhUD8RprvipvoJ_nG8fle73EeXgKKoOecpZwDe6y754gq8r4Kl9Pvu1z-cTZMni7qva2IZKGoKPE4Bgl6LaeGHvk9igAnd5kyOpEDgBL-PZx4eHuvPzsoQ2nXIHMUEtJMeN4T96zzT7TJZxTs6wDIdKWnjo1lKF3Th_RMBSNDcnlMuSpAMkDKm3s7qkweH9Evawx722IzM_c9TWJtAdGVlrDHM-JMoYtuduIgkzfuwwMMQ6U51g0WOjuw_vu0yKfyO5X4fy-GZJeyUHbufWq8v7YGdWb9dW5fioKcnEHdvL6-Y3Ti8bmKc_jYosmjPlXh6qNUaJfsnr3piNbp0-buLltKv2mPFuXMMGStyLlGfb-dM75-0B1047eQVFuwPlV8F8cxKVMo7O2umOWWVnOCOt5YwDcCngaHbBG1tnQatWXkbFM3ZMx5EgKoGFzU87E-btNoWFRPvpqiM6VQLMHRZExB0ffj3XdIj_iNQ5NQWbHKmTHadgWSV8b741EIgtzBqTWO0LHxApHrYPk2XTb_LX7ZRFq6QFsakp2ozyqRJAdXCUGaXQsLD1X-FNXOcEDX0NyLbMYG7HTy3GBTAnzzVu3BDyTFOxNZ6V2lHfwlbT6QOD6flvaD0vand87GpVt0DsKnabqlxsAznIc9_vEyDljVjfBOpLTwDxASmwdqvhGQSbXTPebzS2Lq_C8pjHVfjtl3zqWitgzadzWFrjFpL5igUInbaTrItbQupkFrFYb9B5dNwlEdWCYv4XhGzX53dBTCMjszL42OPBRUpMdwgY1TWwLWzyG4NbHNgWdOQQZw7SHs6ykRYqPjE1i8J5a_w0jOXTyWcpI_mpI_U-qcpeX7wGveDFQdxj32MhYFWUWX3_NdHtopYi7PVpYKnbbpxaeA4fbGwPmoZCWtS3GXNL_JyWrTB_HOhkGByfhcA5XVOJ_WL9Lq_0lrMcFX-PnF-SuMgjVUxTkGscKm9ZFWB6z3WQ1tK_p3OmlkkgS0BGfLauK_14TtFM1DaGsemb6hIx2D2TpS9MvKdYNI1jZJ19clVW35FwTaWMnzxvYx_kfBgaL8XobrniD7Da5WceC_WaLcZag6aShd4";
+const DROPBOX_TOKEN = "_kRH7gmqAGfumc2qE_2QBWMJQYDlM4YxR82GF98rK5kgTDmhiEFyTYgFjFhqtjwEMkHWViYPmBO8k3zE9uV5CicOIWA3Aipt5McMc1ja8oUYVyuMsFYyZaHg1xOfHS231yfo5mwiI51pz8WPJvhx_koI1SKHuSIueuGlYjHtGP6_";
 const ROOT_FOLDER = "/MNVRS_Idea Pipeline";
 
 const FOLDERS = [
@@ -63,7 +63,7 @@ function WaveformViz({ color, active }) {
   );
 }
 
-function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
+function FileCard({ file, folderColor, onMove, onPlay, isPlaying, audioRef }) {
   const [expanded, setExpanded] = useState(false);
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState([]);
@@ -71,7 +71,6 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
 
   const name = file.name.replace(/\.wav$/i, "").replace(/_/g, " ");
   const size = file.size ? `${(file.size / 1024 / 1024).toFixed(1)} MB` : "—";
-  const otherFolders = FOLDERS.filter(f => f.id !== file.folderId);
 
   const handleMove = async (targetFolder) => {
     setMoving(true);
@@ -81,19 +80,22 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
 
   const addNote = () => {
     if (!note.trim()) return;
-    setNotes(prev => [...prev, { text: note.trim(), time: "just now" }]);
+    setNotes(prev => [...prev, { text: note.trim(), time: "just now", user: "You" }]);
     setNote("");
   };
 
+  const otherFolders = FOLDERS.filter(f => f.id !== file.folderId);
+
   return (
     <div style={{
-      background: C.card,
-      border: `1px solid ${expanded ? folderColor + "44" : C.border}`,
+      background: C.card, border: `1px solid ${expanded ? folderColor + "44" : C.border}`,
       borderRadius: 14, overflow: "hidden", transition: "all 0.2s ease",
       boxShadow: expanded ? `0 4px 24px ${folderColor}11` : "none",
     }}>
+      {/* Main Row */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 12, padding: "14px 16px", cursor: "pointer",
+        display: "flex", alignItems: "center", gap: 12, padding: "14px 16px",
+        cursor: "pointer",
       }} onClick={() => setExpanded(!expanded)}>
         <button
           onClick={(e) => { e.stopPropagation(); onPlay(file); }}
@@ -102,8 +104,8 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
             background: isPlaying ? folderColor : C.elevated,
             border: `1px solid ${isPlaying ? folderColor : C.border}`,
             color: isPlaying ? "#fff" : C.muted,
-            cursor: "pointer", fontSize: 13,
-            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer", fontSize: 13, display: "flex",
+            alignItems: "center", justifyContent: "center",
             boxShadow: isPlaying ? `0 0 12px ${folderColor}66` : "none",
             transition: "all 0.2s",
           }}
@@ -129,24 +131,26 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
             background: C.accentBright + "22", color: C.accentBright,
             borderRadius: 20, padding: "2px 8px", fontSize: 10, fontWeight: 600,
             fontFamily: "'DM Mono', monospace",
-          }}>{notes.length} note{notes.length > 1 ? "s" : ""}</span>
+          }}>
+            {notes.length} note{notes.length > 1 ? "s" : ""}
+          </span>
         )}
 
-        <span style={{
-          color: C.muted, fontSize: 12,
-          transition: "transform 0.2s",
-          transform: expanded ? "rotate(180deg)" : "none",
-          display: "inline-block",
-        }}>▾</span>
+        <span style={{ color: C.muted, fontSize: 12, transition: "transform 0.2s", transform: expanded ? "rotate(180deg)" : "none" }}>
+          ▾
+        </span>
       </div>
 
+      {/* Expanded Panel */}
       {expanded && (
         <div style={{ borderTop: `1px solid ${C.border}`, padding: "14px 16px", background: C.elevated }}>
+
+          {/* Move to folder */}
           <div style={{ marginBottom: 14 }}>
             <div style={{ fontSize: 10, color: C.muted, marginBottom: 8, fontFamily: "'DM Mono', monospace", letterSpacing: 1 }}>
               MOVE TO
             </div>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: 8 }}>
               {otherFolders.map(f => (
                 <button
                   key={f.id}
@@ -154,11 +158,9 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
                   disabled={moving}
                   style={{
                     background: C.card, border: `1px solid ${f.color}44`,
-                    borderRadius: 8, padding: "6px 12px",
-                    cursor: moving ? "wait" : "pointer",
+                    borderRadius: 8, padding: "6px 12px", cursor: moving ? "wait" : "pointer",
                     color: f.color, fontSize: 11, fontWeight: 600,
-                    fontFamily: "'DM Mono', monospace",
-                    display: "flex", alignItems: "center", gap: 5,
+                    fontFamily: "'DM Mono', monospace", display: "flex", alignItems: "center", gap: 5,
                     opacity: moving ? 0.6 : 1, transition: "all 0.2s",
                   }}
                 >
@@ -168,6 +170,7 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
             </div>
           </div>
 
+          {/* Notes */}
           <div>
             <div style={{ fontSize: 10, color: C.muted, marginBottom: 8, fontFamily: "'DM Mono', monospace", letterSpacing: 1 }}>
               NOTES
@@ -192,7 +195,8 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
                 style={{
                   flex: 1, background: C.card, border: `1px solid ${C.border}`,
                   borderRadius: 8, padding: "7px 10px", color: C.text,
-                  fontSize: 12, fontFamily: "'DM Sans', sans-serif", outline: "none",
+                  fontSize: 12, fontFamily: "'DM Sans', sans-serif",
+                  outline: "none",
                 }}
               />
               <button onClick={addNote} style={{
@@ -209,14 +213,19 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
 }
 
 function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
+  const audioRef = useRef(null);
+  const count = files.length;
+
   return (
     <div style={{
       background: C.surface, border: `1px solid ${C.border}`,
-      borderRadius: 18, overflow: "hidden",
-      display: "flex", flexDirection: "column", minHeight: 300,
+      borderRadius: 18, overflow: "hidden", display: "flex", flexDirection: "column",
+      minHeight: 300,
     }}>
+      {/* Folder Header */}
       <div style={{
-        padding: "18px 20px", borderBottom: `1px solid ${C.border}`,
+        padding: "18px 20px",
+        borderBottom: `1px solid ${C.border}`,
         background: `linear-gradient(135deg, ${folder.color}11, transparent)`,
         position: "relative",
       }}>
@@ -228,7 +237,8 @@ function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
           <div style={{
             width: 38, height: 38, borderRadius: 10,
             background: folder.color + "22", border: `1px solid ${folder.color}44`,
-            display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 18,
           }}>{folder.icon}</div>
           <div>
             <div style={{ fontWeight: 700, fontSize: 15, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
@@ -243,18 +253,19 @@ function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
               borderRadius: 20, padding: "3px 10px",
               fontSize: 12, fontWeight: 700, fontFamily: "'DM Mono', monospace",
             }}>
-              {loading ? "…" : files.length}
+              {loading ? "…" : count}
             </span>
           </div>
         </div>
       </div>
 
+      {/* Files */}
       <div style={{ padding: 14, flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
         {loading ? (
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 40, gap: 10, color: C.muted, fontSize: 13 }}>
             <Spinner /> Loading from Dropbox…
           </div>
-        ) : files.length === 0 ? (
+        ) : count === 0 ? (
           <div style={{
             textAlign: "center", padding: "30px 20px", color: C.muted, fontSize: 13,
             border: `1px dashed ${C.border}`, borderRadius: 10,
@@ -271,6 +282,7 @@ function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
               onMove={onMove}
               onPlay={onPlay}
               isPlaying={playingFile?.id === file.id}
+              audioRef={audioRef}
             />
           ))
         )}
@@ -298,14 +310,17 @@ export default function StemFlow() {
         },
         body: JSON.stringify({ path: folder.path, recursive: false }),
       });
+
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err?.error_summary || "Dropbox error");
       }
+
       const data = await res.json();
       const wavFiles = data.entries
         .filter(f => f[".tag"] === "file" && f.name.toLowerCase().endsWith(".wav"))
         .map(f => ({ ...f, folderId: folder.id, folderPath: folder.path }));
+
       setFilesByFolder(prev => ({ ...prev, [folder.id]: wavFiles }));
       setConnected(true);
     } catch (err) {
@@ -315,11 +330,14 @@ export default function StemFlow() {
     }
   };
 
-  useEffect(() => { FOLDERS.forEach(fetchFolder); }, []);
+  useEffect(() => {
+    FOLDERS.forEach(fetchFolder);
+  }, []);
 
   const handleMove = async (file, targetFolder) => {
     const fromPath = file.path_lower;
     const toPath = `${targetFolder.path.toLowerCase()}/${file.name}`;
+
     try {
       const res = await fetch("https://api.dropboxapi.com/2/files/move_v2", {
         method: "POST",
@@ -329,7 +347,10 @@ export default function StemFlow() {
         },
         body: JSON.stringify({ from_path: fromPath, to_path: toPath, autorename: true }),
       });
+
       if (!res.ok) throw new Error("Move failed");
+
+      // Update local state
       setFilesByFolder(prev => {
         const updated = { ...prev };
         updated[file.folderId] = updated[file.folderId].filter(f => f.id !== file.id);
@@ -349,6 +370,7 @@ export default function StemFlow() {
       setAudioUrl(null);
       return;
     }
+
     try {
       const res = await fetch("https://api.dropboxapi.com/2/files/get_temporary_link", {
         method: "POST",
@@ -358,6 +380,7 @@ export default function StemFlow() {
         },
         body: JSON.stringify({ path: file.path_lower }),
       });
+
       if (!res.ok) throw new Error("Could not get playback link");
       const data = await res.json();
       setAudioUrl(data.link);
@@ -403,8 +426,10 @@ export default function StemFlow() {
         minHeight: "100vh", background: C.bg,
         fontFamily: "'DM Sans', sans-serif", color: C.text,
       }}>
+        {/* Header */}
         <div style={{
-          padding: "16px 28px", borderBottom: `1px solid ${C.border}`,
+          padding: "16px 28px",
+          borderBottom: `1px solid ${C.border}`,
           background: C.surface,
           display: "flex", alignItems: "center", justifyContent: "space-between",
           position: "sticky", top: 0, zIndex: 100,
@@ -432,7 +457,9 @@ export default function StemFlow() {
               <div style={{
                 background: "#ef444422", border: "1px solid #ef444444",
                 borderRadius: 8, padding: "6px 14px", fontSize: 12, color: "#ef4444",
-              }}>⚠ {error}</div>
+              }}>
+                ⚠ {error}
+              </div>
             ) : connected ? (
               <div style={{
                 background: "#05966922", border: "1px solid #05966944",
@@ -441,7 +468,7 @@ export default function StemFlow() {
               }}>
                 <div style={{
                   width: 6, height: 6, borderRadius: "50%", background: "#10b981",
-                  boxShadow: "0 0 6px #10b981",
+                  boxShadow: "0 0 6px #10b981", animation: "pulse 2s infinite",
                 }} />
                 Dropbox Live
               </div>
@@ -450,6 +477,7 @@ export default function StemFlow() {
                 <Spinner /> Connecting…
               </div>
             )}
+
             <div style={{
               background: C.elevated, border: `1px solid ${C.border}`,
               borderRadius: 8, padding: "6px 14px", fontSize: 12, color: C.muted,
@@ -457,19 +485,43 @@ export default function StemFlow() {
             }}>
               {totalFiles} WAV{totalFiles !== 1 ? "s" : ""}
             </div>
+
             <Avatar name="M" size={36} />
           </div>
         </div>
 
+        {/* Pipeline */}
         <div style={{ padding: "24px 28px" }}>
           <div style={{ marginBottom: 20, animation: "fadeUp 0.4s ease" }}>
-            <div style={{ fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Idea Pipeline</div>
+            <div style={{ fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>
+              Idea Pipeline
+            </div>
             <div style={{ color: C.muted, fontSize: 13, marginTop: 4 }}>
-              Live Dropbox sync · Play, review, and move tracks between stages
+              Your live Dropbox folders · Play, review, and move tracks between stages
             </div>
           </div>
 
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-         
+            gap: 20,
+          }}>
+            {FOLDERS.map((folder, i) => (
+              <div key={folder.id} style={{ animation: `fadeUp 0.4s ease ${i * 0.1}s both` }}>
+                <FolderPanel
+                  folder={folder}
+                  files={filesByFolder[folder.id]}
+                  loading={loading[folder.id]}
+                  onMove={handleMove}
+                  onPlay={handlePlay}
+                  playingFile={playingFile}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Now Playing Bar */}
+          {playingFile && (
+            <div style={{
+              position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",
+ 
