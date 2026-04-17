@@ -2,13 +2,13 @@ import { useState, useEffect, useRef } from "react";
 
 const DROPBOX_TOKEN = "sl.u.AGZkxHGiJN1GfOzW_GdtLq36hRFYT_NV0ELUqu2Oz623opNkVhM5nlN_rrCvR5hKDsSzzhCgJGv3OWnwkJZn8JmNntAD7CL890TP1Wt9EQaWl9K2YWEQxTnA1YQDOYmDpKGIbIbaQSewdsBLcQKWG1zN6oZCbgZHnDpZ9Zb0kSFwVaWqUufrRSB86FlrLkbkKMGe4XOjvGeIDv2L1Oya3I8RIYXPBHdmnylZX6bcc7Rtg_nen6NGx7ynP_sqvTr5_GXtOJKK0nOs9BzyVDfy2HOs-TBd3Kn3d0PrXbUV9_7KOyukiCgKyEZ7-2o0ELOGM8SNBULiTjLvmhYG6pvD3zzh3WXWKW3TYe2_nBpUHjOQLW1wnn23iqFaq1nYIzblw8jIBrWUwlfeTATtIwHKmTsmipSBuzm2-cKkjYdyqU7SGcsddYKxtC084hfR39Zdjwsyda5ILae2WFa_rNy2pzXjWZZ73RqGT66z1jughm-cv2oga0IsN8alHF_dQYq0W_Aj0_IpvseWmZWAT5A2sUosAfj50N6KbtpP2BRnYGiNKHmEI1mt_pzCsVs99suUO3oS7P1IMV-8Pbj0hFXG2SZY2JQ4SyPq2YCLnuXwb8QuHw1aZmnHClcQgBOhRktkJ73QWCfwuNIo504auYH6Xy4gyCm-K6YleFQ9sM9rEaI64gH3IZ4FSeeyezqcln6DTGANDIg8WAfLTdDx52WpTWHp455T12YsJ1FMm1W68UaH0q6sTkaEkCPlsowxyMhVPJKf-b_hWvc-aumkHCdabylrXU1J0tVaD5AsYy6wfsbhqnkmKs4WSiG5oYSc9erKjFTt5YcprzZvYI6NWatjPyQ42vyYcf67CHA_RwDJvDi_caxKlOz7a5KGVzc2GZCCCg9JZ3IbWje4W8gD3GTEsH4l_I01HDfvkW4wpF4uBbPPXa-QU9UxuUvWuJQy7HRVug_gdSZsnb-c9x51nwORowd0vsbdyKlU5eIZpGzDi1ANygqbES6J-Ip11H8GJoc6KFEQtz_bQQLX9n6cxjMzmPoRPBvzrzp5tFI-dzEVRGYZTDR8D_yP0yCDVnB9CLqqipI6Om6Tf_Og5STYb4ok7w9p7Fg3fc5cP9jJQjQ-R3uBGKhy8e4yTV4rLuJIjt-dws7ccMR9ztW3e9DgTUc2HRE6MTZoxb1dZEv5ThlyIHPMU0AChDyz8lrUGHZC-CkHhUfZtlJzz59Dw6hEJ6JEqis-17TOb1Gm22OfI5KR49gRP8TBwAcW74SBYa10QbmMNBE";
 
-const ROOT_FOLDER = "/MUSIC PRODUCTION/MNVRS_Idea Pipeline";
+const ROOT_FOLDER = "/music production/mnvrs_idea pipeline";
 
 const FOLDERS = [
-  { id: "incoming", label: "Incoming", path: `${ROOT_FOLDER}/INCOMING`, color: "#06b6d4", icon: "⬇", desc: "New ideas awaiting review" },
-  { id: "selected", label: "Selected to Develop", path: `${ROOT_FOLDER}/SELECTED_TO DEVELOP`, color: "#f59e0b", icon: "✦", desc: "Approved for development" },
-  { id: "inprogress", label: "In Progress", path: `${ROOT_FOLDER}/IN PROGRESS`, color: "#10b981", icon: "▶", desc: "Actively being worked on" },
-];, 
+  { id: "incoming", label: "Incoming", path: `${ROOT_FOLDER}/incoming`, color: "#06b6d4", icon: "⬇", desc: "New ideas awaiting review" },
+  { id: "selected", label: "Selected to Develop", path: `${ROOT_FOLDER}/selected_to develop`, color: "#f59e0b", icon: "✦", desc: "Approved for development" },
+  { id: "inprogress", label: "In Progress", path: `${ROOT_FOLDER}/in progress`, color: "#10b981", icon: "▶", desc: "Actively being worked on" },
+];
 
 const C = {
   bg: "#080810", surface: "#0f0f1a", card: "#14141f", elevated: "#1a1a28",
