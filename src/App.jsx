@@ -16,6 +16,16 @@ const C = {
   text: "#f1f0ff", muted: "#6b6b8a", subtle: "#1e1e30",
 };
 
+const isAudio = (name) => {
+  const lower = name.toLowerCase();
+  return lower.endsWith(".mp3") || lower.endsWith(".wav") || lower.endsWith(".aiff") || lower.endsWith(".flac") || lower.endsWith(".m4a");
+};
+
+const getFileType = (name) => {
+  const ext = name.split(".").pop().toUpperCase();
+  return ext;
+};
+
 function Avatar({ name, size = 32 }) {
   const colors = ["#6d28d9", "#0891b2", "#059669", "#d97706", "#dc2626"];
   const color = colors[name.charCodeAt(0) % colors.length];
@@ -46,8 +56,9 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState([]);
   const [moving, setMoving] = useState(false);
-  const name = file.name.replace(/\.wav$/i, "").replace(/_/g, " ");
+  const name = file.name.replace(/\.(mp3|wav|aiff|flac|m4a)$/i, "").replace(/_/g, " ");
   const size = file.size ? `${(file.size / 1024 / 1024).toFixed(1)} MB` : "—";
+  const fileType = getFileType(file.name);
   const otherFolders = FOLDERS.filter(f => f.id !== file.folderId);
 
   const handleMove = async (targetFolder) => {
@@ -70,7 +81,7 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
         </button>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontWeight: 600, fontSize: 14, color: C.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", textTransform: "capitalize" }}>{name}</div>
-          <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>{size} · WAV</div>
+          <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>{size} · {fileType}</div>
         </div>
         {isPlaying && <WaveformViz color={folderColor} active />}
         {notes.length > 0 && <span style={{ background: C.accentBright + "22", color: C.accentBright, borderRadius: 20, padding: "2px 8px", fontSize: 10, fontWeight: 600 }}>{notes.length} note{notes.length > 1 ? "s" : ""}</span>}
@@ -106,7 +117,9 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
       )}
     </div>
   );
-}function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
+}
+
+function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
   return (
     <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", display: "flex", flexDirection: "column", minHeight: 300 }}>
       <div style={{ padding: "18px 20px", borderBottom: `1px solid ${C.border}`, background: `linear-gradient(135deg, ${folder.color}11, transparent)`, position: "relative" }}>
@@ -132,7 +145,7 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
         ) : files.length === 0 ? (
           <div style={{ textAlign: "center", padding: "30px 20px", color: C.muted, fontSize: 13, border: `1px dashed ${C.border}`, borderRadius: 10 }}>
             <div style={{ fontSize: 24, marginBottom: 8 }}>📭</div>
-            No WAV files in this folder
+            No audio files in this folder
           </div>
         ) : (
           files.map(file => (
@@ -162,8 +175,8 @@ export default function StemFlow() {
       });
       if (!res.ok) { const err = await res.json(); throw new Error(err.error_summary || "Dropbox error"); }
       const data = await res.json();
-      const wavFiles = data.entries.filter(f => f[".tag"] === "file" && f.name.toLowerCase().endsWith(".wav")).map(f => ({ ...f, folderId: folder.id, folderPath: folder.path }));
-      setFilesByFolder(prev => ({ ...prev, [folder.id]: wavFiles }));
+      const audioFiles = data.entries.filter(f => f[".tag"] === "file" && isAudio(f.name)).map(f => ({ ...f, folderId: folder.id, folderPath: folder.path }));
+      setFilesByFolder(prev => ({ ...prev, [folder.id]: audioFiles }));
       setConnected(true);
     } catch (err) {
       setError(err.message);
@@ -179,7 +192,7 @@ export default function StemFlow() {
       const res = await fetch("https://api.dropboxapi.com/2/files/move_v2", {
         method: "POST",
         headers: { "Authorization": `Bearer ${DROPBOX_TOKEN}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from_path: file.path_lower, to_path: `${targetFolder.path.toLowerCase()}/${file.name}`, autorename: true }),
+        body: JSON.stringify({ from_path: file.path_lower, to_path: `${targetFolder.path}/${file.name}`, autorename: true }),
       });
       if (!res.ok) throw new Error("Move failed");
       setFilesByFolder(prev => {
@@ -218,7 +231,9 @@ export default function StemFlow() {
     }
   }, [audioUrl]);
 
-  const totalFiles = Object.values(filesByFolder).flat().length;return (
+  const totalFiles = Object.values(filesByFolder).flat().length;
+
+  return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap');
@@ -259,7 +274,7 @@ export default function StemFlow() {
               </div>
             )}
             <div style={{ background: C.elevated, border: `1px solid ${C.border}`, borderRadius: 8, padding: "6px 14px", fontSize: 12, color: C.muted }}>
-              {totalFiles} WAV{totalFiles !== 1 ? "s" : ""}
+              {totalFiles} track{totalFiles !== 1 ? "s" : ""}
             </div>
             <Avatar name="M" size={36} />
           </div>
@@ -283,7 +298,7 @@ export default function StemFlow() {
           <div style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", background: C.elevated, border: `1px solid ${C.accentBright}44`, borderRadius: 16, padding: "12px 20px", display: "flex", alignItems: "center", gap: 14, boxShadow: `0 8px 40px ${C.accent}44`, animation: "fadeUp 0.3s ease", zIndex: 200, minWidth: 320 }}>
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.accentBright, boxShadow: `0 0 8px ${C.accentBright}`, animation: "pulse 1s ease infinite alternate" }} />
             <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 600, fontSize: 13 }}>{playingFile.name.replace(/\.wav$/i, "").replace(/_/g, " ")}</div>
+              <div style={{ fontWeight: 600, fontSize: 13 }}>{playingFile.name.replace(/\.(mp3|wav|aiff|flac|m4a)$/i, "").replace(/_/g, " ")}</div>
               <div style={{ color: C.muted, fontSize: 11 }}>Now Playing</div>
             </div>
             <WaveformViz color={C.accentBright} active />
@@ -293,4 +308,4 @@ export default function StemFlow() {
       </div>
     </>
   );
-}
+                         }
