@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
-const DROPBOX_TOKEN = "_kRH7gmqAGfumc2qE_2QBWMJQYDlM4YxR82GF98rK5kgTDmhiEFyTYgFjFhqtjwEMkHWViYPmBO8k3zE9uV5CicOIWA3Aipt5McMc1ja8oUYVyuMsFYyZaHg1xOfHS231yfo5mwiI51pz8WPJvhx_koI1SKHuSIueuGlYjHtGP6_";
+const DROPBOX_TOKEN = "sl.u.AGaXbfnG312wcWcGvpdXWfW2CLPM6Gu4gYiWlrmsZ7cHlEUyKNR0h_Q598-noEiZKV3Oxgz-CCGSnBZvFyGal2UfUU0C5WuRDIKCbR6j-DyRRYrYPxder15v6hjo3AJ6QqlWwEXd6O66xjcRZ566VTSCA_Um2odKrm07VhK2kW58GJfUgKmstDhUD8RprvipvoJ_nG8fle73EeXgKKoOecpZwDe6y754gq8r4Kl9Pvu1z-cTZMni7qva2IZKGoKPE4Bgl6LaeGHvk9igAnd5kyOpEDgBL-PZx4eHuvPzsoQ2nXIHMUEtJMeN4T96zzT7TJZxTs6wDIdKWnjo1lKF3Th_RMBSNDcnlMuSpAMkDKm3s7qkweH9Evawx722IzM_c9TWJtAdGVlrDHM-JMoYtuduIgkzfuwwMMQ6U51g0WOjuw_vu0yKfyO5X4fy-GZJeyUHbufWq8v7YGdWb9dW5fioKcnEHdvL6-Y3Ti8bmKc_jYosmjPlXh6qNUaJfsnr3piNbp0-buLltKv2mPFuXMMGStyLlGfb-dM75-0B1047eQVFuwPlV8F8cxKVMo7O2umOWWVnOCOt5YwDcCngaHbBG1tnQatWXkbFM3ZMx5EgKoGFzU87E-btNoWFRPvpqiM6VQLMHRZExB0ffj3XdIj_iNQ5NQWbHKmTHadgWSV8b741EIgtzBqTWO0LHxApHrYPk2XTb_LX7ZRFq6QFsakp2ozyqRJAdXCUGaXQsLD1X-FNXOcEDX0NyLbMYG7HTy3GBTAnzzVu3BDyTFOxNZ6V2lHfwlbT6QOD6flvaD0vand87GpVt0DsKnabqlxsAznIc9_vEyDljVjfBOpLTwDxASmwdqvhGQSbXTPebzS2Lq_C8pjHVfjtl3zqWitgzadzWFrjFpL5igUInbaTrItbQupkFrFYb9B5dNwlEdWCYv4XhGzX53dBTCMjszL42OPBRUpMdwgY1TWwLWzyG4NbHNgWdOQQZw7SHs6ykRYqPjE1i8J5a_w0jOXTyWcpI_mpI_U-qcpeX7wGveDFQdxj32MhYFWUWX3_NdHtopYi7PVpYKnbbpxaeA4fbGwPmoZCWtS3GXNL_JyWrTB_HOhkGByfhcA5XVOJ_WL9Lq_0lrMcFX-PnF-SuMgjVUxTkGscKm9ZFWB6z3WQ1tK_p3OmlkkgS0BGfLauK_14TtFM1DaGsemb6hIx2D2TpS9MvKdYNI1jZJ19clVW35FwTaWMnzxvYx_kfBgaL8XobrniD7Da5WceC_WaLcZag6aShd4";
+
 const ROOT_FOLDER = "/MNVRS_Idea Pipeline";
 
 const FOLDERS = [
@@ -10,40 +11,23 @@ const FOLDERS = [
 ];
 
 const C = {
-  bg: "#080810",
-  surface: "#0f0f1a",
-  card: "#14141f",
-  elevated: "#1a1a28",
-  border: "#ffffff0f",
-  borderHover: "#ffffff1a",
-  accent: "#6d28d9",
-  accentBright: "#8b5cf6",
-  text: "#f1f0ff",
-  muted: "#6b6b8a",
-  subtle: "#1e1e30",
+  bg: "#080810", surface: "#0f0f1a", card: "#14141f", elevated: "#1a1a28",
+  border: "#ffffff0f", accent: "#6d28d9", accentBright: "#8b5cf6",
+  text: "#f1f0ff", muted: "#6b6b8a", subtle: "#1e1e30",
 };
 
 function Avatar({ name, size = 32 }) {
   const colors = ["#6d28d9", "#0891b2", "#059669", "#d97706", "#dc2626"];
   const color = colors[name.charCodeAt(0) % colors.length];
   return (
-    <div style={{
-      width: size, height: size, borderRadius: "50%", background: color,
-      display: "flex", alignItems: "center", justifyContent: "center",
-      fontSize: size * 0.4, fontWeight: 800, color: "#fff", flexShrink: 0,
-      fontFamily: "'DM Mono', monospace",
-    }}>{name[0].toUpperCase()}</div>
+    <div style={{ width: size, height: size, borderRadius: "50%", background: color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: size * 0.4, fontWeight: 800, color: "#fff", flexShrink: 0 }}>
+      {name[0].toUpperCase()}
+    </div>
   );
 }
 
 function Spinner() {
-  return (
-    <div style={{
-      width: 18, height: 18, border: `2px solid ${C.border}`,
-      borderTop: `2px solid ${C.accentBright}`, borderRadius: "50%",
-      animation: "spin 0.7s linear infinite", display: "inline-block",
-    }} />
-  );
+  return <div style={{ width: 18, height: 18, border: `2px solid ${C.border}`, borderTop: `2px solid ${C.accentBright}`, borderRadius: "50%", animation: "spin 0.7s linear infinite", display: "inline-block" }} />;
 }
 
 function WaveformViz({ color, active }) {
@@ -51,26 +35,20 @@ function WaveformViz({ color, active }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 2, height: 32, padding: "0 4px" }}>
       {heights.map((h, i) => (
-        <div key={i} style={{
-          width: 3, height: h, borderRadius: 2,
-          background: active ? color : C.border,
-          opacity: active ? 0.7 + (i % 3) * 0.1 : 1,
-          animation: active ? `wavebar 0.${8 + (i % 5)}s ease-in-out ${i * 0.03}s infinite alternate` : "none",
-          transition: "background 0.3s",
-        }} />
+        <div key={i} style={{ width: 3, height: h, borderRadius: 2, background: active ? color : C.border, animation: active ? `wavebar 0.${8 + (i % 5)}s ease-in-out ${i * 0.03}s infinite alternate` : "none" }} />
       ))}
     </div>
   );
 }
 
-function FileCard({ file, folderColor, onMove, onPlay, isPlaying, audioRef }) {
+function FileCard({ file, folderColor, onMove, onPlay, isPlaying }) {
   const [expanded, setExpanded] = useState(false);
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState([]);
   const [moving, setMoving] = useState(false);
-
   const name = file.name.replace(/\.wav$/i, "").replace(/_/g, " ");
   const size = file.size ? `${(file.size / 1024 / 1024).toFixed(1)} MB` : "—";
+  const otherFolders = FOLDERS.filter(f => f.id !== file.folderId);
 
   const handleMove = async (targetFolder) => {
     setMoving(true);
@@ -80,210 +58,85 @@ function FileCard({ file, folderColor, onMove, onPlay, isPlaying, audioRef }) {
 
   const addNote = () => {
     if (!note.trim()) return;
-    setNotes(prev => [...prev, { text: note.trim(), time: "just now", user: "You" }]);
+    setNotes(prev => [...prev, { text: note.trim(), time: "just now" }]);
     setNote("");
   };
 
-  const otherFolders = FOLDERS.filter(f => f.id !== file.folderId);
-
   return (
-    <div style={{
-      background: C.card, border: `1px solid ${expanded ? folderColor + "44" : C.border}`,
-      borderRadius: 14, overflow: "hidden", transition: "all 0.2s ease",
-      boxShadow: expanded ? `0 4px 24px ${folderColor}11` : "none",
-    }}>
-      {/* Main Row */}
-      <div style={{
-        display: "flex", alignItems: "center", gap: 12, padding: "14px 16px",
-        cursor: "pointer",
-      }} onClick={() => setExpanded(!expanded)}>
-        <button
-          onClick={(e) => { e.stopPropagation(); onPlay(file); }}
-          style={{
-            width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
-            background: isPlaying ? folderColor : C.elevated,
-            border: `1px solid ${isPlaying ? folderColor : C.border}`,
-            color: isPlaying ? "#fff" : C.muted,
-            cursor: "pointer", fontSize: 13, display: "flex",
-            alignItems: "center", justifyContent: "center",
-            boxShadow: isPlaying ? `0 0 12px ${folderColor}66` : "none",
-            transition: "all 0.2s",
-          }}
-        >
+    <div style={{ background: C.card, border: `1px solid ${expanded ? folderColor + "44" : C.border}`, borderRadius: 14, overflow: "hidden", transition: "all 0.2s ease" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px", cursor: "pointer" }} onClick={() => setExpanded(!expanded)}>
+        <button onClick={(e) => { e.stopPropagation(); onPlay(file); }} style={{ width: 36, height: 36, borderRadius: "50%", flexShrink: 0, background: isPlaying ? folderColor : C.elevated, border: `1px solid ${isPlaying ? folderColor : C.border}`, color: isPlaying ? "#fff" : C.muted, cursor: "pointer", fontSize: 13, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}>
           {isPlaying ? "■" : "▶"}
         </button>
-
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{
-            fontWeight: 600, fontSize: 14, color: C.text,
-            whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-            fontFamily: "'DM Sans', sans-serif", textTransform: "capitalize",
-          }}>{name}</div>
-          <div style={{ fontSize: 11, color: C.muted, marginTop: 2, fontFamily: "'DM Mono', monospace" }}>
-            {size} · WAV
-          </div>
+          <div style={{ fontWeight: 600, fontSize: 14, color: C.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", textTransform: "capitalize" }}>{name}</div>
+          <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>{size} · WAV</div>
         </div>
-
         {isPlaying && <WaveformViz color={folderColor} active />}
-
-        {notes.length > 0 && (
-          <span style={{
-            background: C.accentBright + "22", color: C.accentBright,
-            borderRadius: 20, padding: "2px 8px", fontSize: 10, fontWeight: 600,
-            fontFamily: "'DM Mono', monospace",
-          }}>
-            {notes.length} note{notes.length > 1 ? "s" : ""}
-          </span>
-        )}
-
-        <span style={{ color: C.muted, fontSize: 12, transition: "transform 0.2s", transform: expanded ? "rotate(180deg)" : "none" }}>
-          ▾
-        </span>
+        {notes.length > 0 && <span style={{ background: C.accentBright + "22", color: C.accentBright, borderRadius: 20, padding: "2px 8px", fontSize: 10, fontWeight: 600 }}>{notes.length} note{notes.length > 1 ? "s" : ""}</span>}
+        <span style={{ color: C.muted, fontSize: 12, display: "inline-block", transition: "transform 0.2s", transform: expanded ? "rotate(180deg)" : "none" }}>▾</span>
       </div>
-
-      {/* Expanded Panel */}
       {expanded && (
         <div style={{ borderTop: `1px solid ${C.border}`, padding: "14px 16px", background: C.elevated }}>
-
-          {/* Move to folder */}
           <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 10, color: C.muted, marginBottom: 8, fontFamily: "'DM Mono', monospace", letterSpacing: 1 }}>
-              MOVE TO
-            </div>
-            <div style={{ display: "flex", gap: 8 }}>
+            <div style={{ fontSize: 10, color: C.muted, marginBottom: 8, letterSpacing: 1 }}>MOVE TO</div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {otherFolders.map(f => (
-                <button
-                  key={f.id}
-                  onClick={() => handleMove(f)}
-                  disabled={moving}
-                  style={{
-                    background: C.card, border: `1px solid ${f.color}44`,
-                    borderRadius: 8, padding: "6px 12px", cursor: moving ? "wait" : "pointer",
-                    color: f.color, fontSize: 11, fontWeight: 600,
-                    fontFamily: "'DM Mono', monospace", display: "flex", alignItems: "center", gap: 5,
-                    opacity: moving ? 0.6 : 1, transition: "all 0.2s",
-                  }}
-                >
+                <button key={f.id} onClick={() => handleMove(f)} disabled={moving} style={{ background: C.card, border: `1px solid ${f.color}44`, borderRadius: 8, padding: "6px 12px", cursor: moving ? "wait" : "pointer", color: f.color, fontSize: 11, fontWeight: 600, display: "flex", alignItems: "center", gap: 5, opacity: moving ? 0.6 : 1 }}>
                   {moving ? <Spinner /> : f.icon} {f.label}
                 </button>
               ))}
             </div>
           </div>
-
-          {/* Notes */}
           <div>
-            <div style={{ fontSize: 10, color: C.muted, marginBottom: 8, fontFamily: "'DM Mono', monospace", letterSpacing: 1 }}>
-              NOTES
-            </div>
+            <div style={{ fontSize: 10, color: C.muted, marginBottom: 8, letterSpacing: 1 }}>NOTES</div>
             {notes.map((n, i) => (
-              <div key={i} style={{
-                background: C.card, borderRadius: 8, padding: "8px 10px",
-                marginBottom: 6, fontSize: 12, color: C.text, lineHeight: 1.5,
-                border: `1px solid ${C.border}`,
-              }}>
+              <div key={i} style={{ background: C.card, borderRadius: 8, padding: "8px 10px", marginBottom: 6, fontSize: 12, color: C.text, lineHeight: 1.5, border: `1px solid ${C.border}` }}>
                 <span style={{ color: C.accentBright, fontWeight: 600 }}>You</span>
                 <span style={{ color: C.muted }}> · {n.time}</span>
                 <div style={{ marginTop: 3 }}>{n.text}</div>
               </div>
             ))}
             <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
-              <input
-                value={note}
-                onChange={e => setNote(e.target.value)}
-                onKeyDown={e => e.key === "Enter" && addNote()}
-                placeholder="Add a note… (Enter to save)"
-                style={{
-                  flex: 1, background: C.card, border: `1px solid ${C.border}`,
-                  borderRadius: 8, padding: "7px 10px", color: C.text,
-                  fontSize: 12, fontFamily: "'DM Sans', sans-serif",
-                  outline: "none",
-                }}
-              />
-              <button onClick={addNote} style={{
-                background: C.accentBright, border: "none", borderRadius: 8,
-                color: "#fff", padding: "7px 14px", cursor: "pointer",
-                fontSize: 12, fontWeight: 600,
-              }}>Add</button>
+              <input value={note} onChange={e => setNote(e.target.value)} onKeyDown={e => e.key === "Enter" && addNote()} placeholder="Add a note… (Enter to save)" style={{ flex: 1, background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "7px 10px", color: C.text, fontSize: 12, outline: "none" }} />
+              <button onClick={addNote} style={{ background: C.accentBright, border: "none", borderRadius: 8, color: "#fff", padding: "7px 14px", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>Add</button>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-}
-
-function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
-  const audioRef = useRef(null);
-  const count = files.length;
-
+}function FolderPanel({ folder, files, loading, onMove, onPlay, playingFile }) {
   return (
-    <div style={{
-      background: C.surface, border: `1px solid ${C.border}`,
-      borderRadius: 18, overflow: "hidden", display: "flex", flexDirection: "column",
-      minHeight: 300,
-    }}>
-      {/* Folder Header */}
-      <div style={{
-        padding: "18px 20px",
-        borderBottom: `1px solid ${C.border}`,
-        background: `linear-gradient(135deg, ${folder.color}11, transparent)`,
-        position: "relative",
-      }}>
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 2,
-          background: `linear-gradient(90deg, transparent, ${folder.color}88, transparent)`,
-        }} />
+    <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 18, overflow: "hidden", display: "flex", flexDirection: "column", minHeight: 300 }}>
+      <div style={{ padding: "18px 20px", borderBottom: `1px solid ${C.border}`, background: `linear-gradient(135deg, ${folder.color}11, transparent)`, position: "relative" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${folder.color}88, transparent)` }} />
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{
-            width: 38, height: 38, borderRadius: 10,
-            background: folder.color + "22", border: `1px solid ${folder.color}44`,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 18,
-          }}>{folder.icon}</div>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: folder.color + "22", border: `1px solid ${folder.color}44`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>{folder.icon}</div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 15, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
-              {folder.label}
-            </div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: C.text }}>{folder.label}</div>
             <div style={{ fontSize: 11, color: C.muted, marginTop: 1 }}>{folder.desc}</div>
           </div>
           <div style={{ marginLeft: "auto" }}>
-            <span style={{
-              background: folder.color + "22", color: folder.color,
-              border: `1px solid ${folder.color}44`,
-              borderRadius: 20, padding: "3px 10px",
-              fontSize: 12, fontWeight: 700, fontFamily: "'DM Mono', monospace",
-            }}>
-              {loading ? "…" : count}
+            <span style={{ background: folder.color + "22", color: folder.color, border: `1px solid ${folder.color}44`, borderRadius: 20, padding: "3px 10px", fontSize: 12, fontWeight: 700 }}>
+              {loading ? "…" : files.length}
             </span>
           </div>
         </div>
       </div>
-
-      {/* Files */}
       <div style={{ padding: 14, flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
         {loading ? (
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 40, gap: 10, color: C.muted, fontSize: 13 }}>
             <Spinner /> Loading from Dropbox…
           </div>
-        ) : count === 0 ? (
-          <div style={{
-            textAlign: "center", padding: "30px 20px", color: C.muted, fontSize: 13,
-            border: `1px dashed ${C.border}`, borderRadius: 10,
-          }}>
+        ) : files.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "30px 20px", color: C.muted, fontSize: 13, border: `1px dashed ${C.border}`, borderRadius: 10 }}>
             <div style={{ fontSize: 24, marginBottom: 8 }}>📭</div>
             No WAV files in this folder
           </div>
         ) : (
           files.map(file => (
-            <FileCard
-              key={file.id}
-              file={file}
-              folderColor={folder.color}
-              onMove={onMove}
-              onPlay={onPlay}
-              isPlaying={playingFile?.id === file.id}
-              audioRef={audioRef}
-            />
+            <FileCard key={file.id} file={file} folderColor={folder.color} onMove={onMove} onPlay={onPlay} isPlaying={playingFile && playingFile.id === file.id} />
           ))
         )}
       </div>
@@ -304,23 +157,12 @@ export default function StemFlow() {
     try {
       const res = await fetch("https://api.dropboxapi.com/2/files/list_folder", {
         method: "POST",
-        headers: {
-          "Authorization": `Bearer ${DROPBOX_TOKEN}`,
-          "Content-Type": "application/json",
-        },
+        headers: { "Authorization": `Bearer ${DROPBOX_TOKEN}`, "Content-Type": "application/json" },
         body: JSON.stringify({ path: folder.path, recursive: false }),
       });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err?.error_summary || "Dropbox error");
-      }
-
+      if (!res.ok) { const err = await res.json(); throw new Error(err.error_summary || "Dropbox error"); }
       const data = await res.json();
-      const wavFiles = data.entries
-        .filter(f => f[".tag"] === "file" && f.name.toLowerCase().endsWith(".wav"))
-        .map(f => ({ ...f, folderId: folder.id, folderPath: folder.path }));
-
+      const wavFiles = data.entries.filter(f => f[".tag"] === "file" && f.name.toLowerCase().endsWith(".wav")).map(f => ({ ...f, folderId: folder.id, folderPath: folder.path }));
       setFilesByFolder(prev => ({ ...prev, [folder.id]: wavFiles }));
       setConnected(true);
     } catch (err) {
@@ -330,64 +172,43 @@ export default function StemFlow() {
     }
   };
 
-  useEffect(() => {
-    FOLDERS.forEach(fetchFolder);
-  }, []);
+  useEffect(() => { FOLDERS.forEach(fetchFolder); }, []);
 
   const handleMove = async (file, targetFolder) => {
-    const fromPath = file.path_lower;
-    const toPath = `${targetFolder.path.toLowerCase()}/${file.name}`;
-
     try {
       const res = await fetch("https://api.dropboxapi.com/2/files/move_v2", {
         method: "POST",
-        headers: {
-          "Authorization": `Bearer ${DROPBOX_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ from_path: fromPath, to_path: toPath, autorename: true }),
+        headers: { "Authorization": `Bearer ${DROPBOX_TOKEN}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ from_path: file.path_lower, to_path: `${targetFolder.path.toLowerCase()}/${file.name}`, autorename: true }),
       });
-
       if (!res.ok) throw new Error("Move failed");
-
-      // Update local state
       setFilesByFolder(prev => {
         const updated = { ...prev };
         updated[file.folderId] = updated[file.folderId].filter(f => f.id !== file.id);
-        const movedFile = { ...file, folderId: targetFolder.id, folderPath: targetFolder.path };
-        updated[targetFolder.id] = [movedFile, ...updated[targetFolder.id]];
+        updated[targetFolder.id] = [{ ...file, folderId: targetFolder.id }, ...updated[targetFolder.id]];
         return updated;
       });
-    } catch (err) {
-      alert("Could not move file: " + err.message);
-    }
+    } catch (err) { alert("Could not move file: " + err.message); }
   };
 
   const handlePlay = async (file) => {
-    if (playingFile?.id === file.id) {
-      audioRef.current?.pause();
+    if (playingFile && playingFile.id === file.id) {
+      audioRef.current.pause();
       setPlayingFile(null);
       setAudioUrl(null);
       return;
     }
-
     try {
       const res = await fetch("https://api.dropboxapi.com/2/files/get_temporary_link", {
         method: "POST",
-        headers: {
-          "Authorization": `Bearer ${DROPBOX_TOKEN}`,
-          "Content-Type": "application/json",
-        },
+        headers: { "Authorization": `Bearer ${DROPBOX_TOKEN}`, "Content-Type": "application/json" },
         body: JSON.stringify({ path: file.path_lower }),
       });
-
       if (!res.ok) throw new Error("Could not get playback link");
       const data = await res.json();
       setAudioUrl(data.link);
       setPlayingFile(file);
-    } catch (err) {
-      alert("Playback error: " + err.message);
-    }
+    } catch (err) { alert("Playback error: " + err.message); }
   };
 
   useEffect(() => {
@@ -397,79 +218,39 @@ export default function StemFlow() {
     }
   }, [audioUrl]);
 
-  const totalFiles = Object.values(filesByFolder).flat().length;
-
-  return (
+  const totalFiles = Object.values(filesByFolder).flat().length;return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: ${C.bg}; }
+        body { background: #080810; }
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: ${C.border}; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #ffffff0f; border-radius: 10px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes wavebar {
-          from { transform: scaleY(0.5); opacity: 0.4; }
-          to { transform: scaleY(1.3); opacity: 1; }
-        }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(12px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes wavebar { from { transform: scaleY(0.5); opacity: 0.4; } to { transform: scaleY(1.3); opacity: 1; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { from { opacity: 0.6; } to { opacity: 1; } }
         input { outline: none; }
-        input::placeholder { color: ${C.muted}; }
+        input::placeholder { color: #6b6b8a; }
       `}</style>
 
       <audio ref={audioRef} onEnded={() => { setPlayingFile(null); setAudioUrl(null); }} />
 
-      <div style={{
-        minHeight: "100vh", background: C.bg,
-        fontFamily: "'DM Sans', sans-serif", color: C.text,
-      }}>
-        {/* Header */}
-        <div style={{
-          padding: "16px 28px",
-          borderBottom: `1px solid ${C.border}`,
-          background: C.surface,
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          position: "sticky", top: 0, zIndex: 100,
-        }}>
+      <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
+        <div style={{ padding: "16px 28px", borderBottom: `1px solid ${C.border}`, background: C.surface, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 100 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{
-              width: 40, height: 40, borderRadius: 12,
-              background: `linear-gradient(135deg, ${C.accent}, #0891b2)`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 20, boxShadow: `0 4px 16px ${C.accent}44`,
-            }}>🎛</div>
+            <div style={{ width: 40, height: 40, borderRadius: 12, background: `linear-gradient(135deg, ${C.accent}, #0891b2)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>🎛</div>
             <div>
-              <div style={{
-                fontWeight: 800, fontSize: 18, letterSpacing: -0.5,
-                fontFamily: "'DM Mono', monospace", color: C.text,
-              }}>STEMFLOW</div>
-              <div style={{ color: C.muted, fontSize: 10, marginTop: -1, fontFamily: "'DM Mono', monospace" }}>
-                MNVRS_Idea Pipeline
-              </div>
+              <div style={{ fontWeight: 800, fontSize: 18, letterSpacing: -0.5, color: C.text }}>STEMFLOW</div>
+              <div style={{ color: C.muted, fontSize: 10 }}>MNVRS_Idea Pipeline</div>
             </div>
           </div>
-
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             {error ? (
-              <div style={{
-                background: "#ef444422", border: "1px solid #ef444444",
-                borderRadius: 8, padding: "6px 14px", fontSize: 12, color: "#ef4444",
-              }}>
-                ⚠ {error}
-              </div>
+              <div style={{ background: "#ef444422", border: "1px solid #ef444444", borderRadius: 8, padding: "6px 14px", fontSize: 12, color: "#ef4444" }}>⚠ {error}</div>
             ) : connected ? (
-              <div style={{
-                background: "#05966922", border: "1px solid #05966944",
-                borderRadius: 8, padding: "6px 14px", fontSize: 12, color: "#10b981",
-                fontFamily: "'DM Mono', monospace", display: "flex", alignItems: "center", gap: 6,
-              }}>
-                <div style={{
-                  width: 6, height: 6, borderRadius: "50%", background: "#10b981",
-                  boxShadow: "0 0 6px #10b981", animation: "pulse 2s infinite",
-                }} />
+              <div style={{ background: "#05966922", border: "1px solid #05966944", borderRadius: 8, padding: "6px 14px", fontSize: 12, color: "#10b981", display: "flex", alignItems: "center", gap: 6 }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#10b981", boxShadow: "0 0 6px #10b981", animation: "pulse 2s infinite" }} />
                 Dropbox Live
               </div>
             ) : (
@@ -477,57 +258,39 @@ export default function StemFlow() {
                 <Spinner /> Connecting…
               </div>
             )}
-
-            <div style={{
-              background: C.elevated, border: `1px solid ${C.border}`,
-              borderRadius: 8, padding: "6px 14px", fontSize: 12, color: C.muted,
-              fontFamily: "'DM Mono', monospace",
-            }}>
+            <div style={{ background: C.elevated, border: `1px solid ${C.border}`, borderRadius: 8, padding: "6px 14px", fontSize: 12, color: C.muted }}>
               {totalFiles} WAV{totalFiles !== 1 ? "s" : ""}
             </div>
-
             <Avatar name="M" size={36} />
           </div>
         </div>
 
-        {/* Pipeline */}
         <div style={{ padding: "24px 28px" }}>
           <div style={{ marginBottom: 20, animation: "fadeUp 0.4s ease" }}>
-            <div style={{ fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>
-              Idea Pipeline
-            </div>
-            <div style={{ color: C.muted, fontSize: 13, marginTop: 4 }}>
-              Your live Dropbox folders · Play, review, and move tracks between stages
-            </div>
+            <div style={{ fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Idea Pipeline</div>
+            <div style={{ color: C.muted, fontSize: 13, marginTop: 4 }}>Live Dropbox sync · Play, review, and move tracks between stages</div>
           </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: 20,
-          }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
             {FOLDERS.map((folder, i) => (
               <div key={folder.id} style={{ animation: `fadeUp 0.4s ease ${i * 0.1}s both` }}>
-                <FolderPanel
-                  folder={folder}
-                  files={filesByFolder[folder.id]}
-                  loading={loading[folder.id]}
-                  onMove={handleMove}
-                  onPlay={handlePlay}
-                  playingFile={playingFile}
-                />
+                <FolderPanel folder={folder} files={filesByFolder[folder.id]} loading={loading[folder.id]} onMove={handleMove} onPlay={handlePlay} playingFile={playingFile} />
               </div>
             ))}
           </div>
-
-          {/* Now Playing Bar */}
-          {playingFile && (
-            <div style={{
-              position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",</div>
-          )}
         </div>
+
+        {playingFile && (
+          <div style={{ position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)", background: C.elevated, border: `1px solid ${C.accentBright}44`, borderRadius: 16, padding: "12px 20px", display: "flex", alignItems: "center", gap: 14, boxShadow: `0 8px 40px ${C.accent}44`, animation: "fadeUp 0.3s ease", zIndex: 200, minWidth: 320 }}>
+            <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.accentBright, boxShadow: `0 0 8px ${C.accentBright}`, animation: "pulse 1s ease infinite alternate" }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600, fontSize: 13 }}>{playingFile.name.replace(/\.wav$/i, "").replace(/_/g, " ")}</div>
+              <div style={{ color: C.muted, fontSize: 11 }}>Now Playing</div>
+            </div>
+            <WaveformViz color={C.accentBright} active />
+            <button onClick={() => { audioRef.current.pause(); setPlayingFile(null); setAudioUrl(null); }} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, color: C.muted, width: 30, height: 30, cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center" }}>■</button>
+          </div>
+        )}
       </div>
     </>
   );
-          }
- 
+}
