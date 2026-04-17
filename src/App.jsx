@@ -523,5 +523,11 @@ export default function StemFlow() {
           {/* Now Playing Bar */}
           {playingFile && (
             <div style={{
-              position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",
+              position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",</div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+          }
  
