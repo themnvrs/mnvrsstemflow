@@ -5,10 +5,10 @@ const DROPBOX_TOKEN = "sl.u.AGZkxHGiJN1GfOzW_GdtLq36hRFYT_NV0ELUqu2Oz623opNkVhM5
 const ROOT_FOLDER = "/MNVRS_Idea Pipeline";
 
 const FOLDERS = [
-  { id: "incoming", label: "Incoming", path: `${ROOT_FOLDER}/Incoming`, color: "#06b6d4", icon: "⬇", desc: "New ideas awaiting review" },
-  { id: "selected", label: "Selected to Develop", path: `${ROOT_FOLDER}/Selected to Develop`, color: "#f59e0b", icon: "✦", desc: "Approved for development" },
-  { id: "inprogress", label: "In Progress", path: `${ROOT_FOLDER}/In Progress`, color: "#10b981", icon: "▶", desc: "Actively being worked on" },
-];
+  { id: "incoming", label: "Incoming", path: `${ROOT_FOLDER}/INCOMING`, color: "#06b6d4", icon: "⬇", desc: "New ideas awaiting review" },
+  { id: "selected", label: "Selected to Develop", path: `${ROOT_FOLDER}/SELECTED_TO DEVELOP`, color: "#f59e0b", icon: "✦", desc: "Approved for development" },
+  { id: "inprogress", label: "In Progress", path: `${ROOT_FOLDER}/IN PROGRESS`, color: "#10b981", icon: "▶", desc: "Actively being worked on" },
+];, 
 
 const C = {
   bg: "#080810", surface: "#0f0f1a", card: "#14141f", elevated: "#1a1a28",
